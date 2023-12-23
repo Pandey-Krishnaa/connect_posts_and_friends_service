@@ -3,6 +3,7 @@ const { GET_USER_BY_ID_URL } = require("./../config/index");
 const ApiError = require("../utils/errors/ApiError");
 const { statusCodes } = require("../utils/errors/errors");
 const errors = require("../utils/errors/errors");
+const { Op } = require("sequelize");
 class FriendService {
   static async SendFriendRequest(from, to, token) {
     try {
@@ -31,11 +32,28 @@ class FriendService {
           statusCodes.BadRequest,
           errors.BadRequest
         );
-      const result = await FriendRepository.create({
-        user1_id: from,
-        user2_id: to,
-      });
-      return result;
+      // check whether they are already friend or not
+
+      const filterObj = {
+        [Op.or]: [
+          { user1_id: from, user2_id: to },
+          { user1_id: to, user2_id: from },
+        ],
+      };
+      const areFriends = await FriendRepository.getOne(filterObj);
+      if (!areFriends) {
+        const result = await FriendRepository.create({
+          user1_id: from,
+          user2_id: to,
+        });
+
+        return result;
+      } else
+        throw new ApiError(
+          "you are already friend",
+          statusCodes.BadRequest,
+          errors.BadRequest
+        );
     } catch (err) {
       throw err;
     }
