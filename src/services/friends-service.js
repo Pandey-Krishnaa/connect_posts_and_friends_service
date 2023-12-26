@@ -1,59 +1,26 @@
 const { FriendRepository } = require("./../repositories/index");
-const { GET_USER_BY_ID_URL } = require("./../config/index");
 const ApiError = require("../utils/errors/ApiError");
-const { statusCodes } = require("../utils/errors/errors");
-const errors = require("../utils/errors/errors");
+const { statusCodes, errors } = require("../utils/errors/errors");
+
 const { Op } = require("sequelize");
 class FriendService {
-  static async SendFriendRequest(from, to, token) {
+  static async acceptRequest(user1_id, user2_id) {
     try {
-      // checking the sender is authorized or not
-      const response1 = await fetch(`${GET_USER_BY_ID_URL}/${from}`, {
-        headers: {
-          "x-auth-token": token,
-        },
-        method: "GET",
-      });
-      if (!response1.ok)
-        throw new ApiError(
-          "please login again",
-          statusCodes.UnauthorizedRequest,
-          errors.UnauthorizedRequest
-        );
-      const response2 = await fetch(`${GET_USER_BY_ID_URL}/${to}`, {
-        headers: {
-          "x-auth-token": token,
-        },
-        method: "GET",
-      });
-      if (!response2.ok)
-        throw new ApiError(
-          "user whom do you want to send request does not exists",
-          statusCodes.BadRequest,
-          errors.BadRequest
-        );
-      // check whether they are already friend or not
-
-      const filterObj = {
+      const filter = {
         [Op.or]: [
-          { user1_id: from, user2_id: to },
-          { user1_id: to, user2_id: from },
+          { user1_id, user2_id },
+          { user1_id: user2_id, user2_id: user1_id },
         ],
       };
-      const areFriends = await FriendRepository.getOne(filterObj);
-      if (!areFriends) {
-        const result = await FriendRepository.create({
-          user1_id: from,
-          user2_id: to,
-        });
-
-        return result;
-      } else
+      const response = await FriendRepository.getOne(filter);
+      if (response)
         throw new ApiError(
-          "you are already friend",
+          "you both are already friends",
           statusCodes.BadRequest,
           errors.BadRequest
         );
+      const result = await FriendRepository.create({ user1_id, user2_id });
+      return result;
     } catch (err) {
       throw err;
     }
