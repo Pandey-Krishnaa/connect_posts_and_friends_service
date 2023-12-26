@@ -1,3 +1,4 @@
 module.exports = {
-  FriendsSerive: require("./friends-service"),
+  FriendsService: require("./friends-service"),
+  RequestService: require("./requests-service"),
 };
