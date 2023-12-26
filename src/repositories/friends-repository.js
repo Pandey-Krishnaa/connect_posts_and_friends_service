@@ -2,7 +2,6 @@ const { friend } = require("./../models/index");
 const ApiError = require("./../utils/errors/ApiError");
 const errors = require("./../utils/errors/errors");
 const { statusCodes } = require("./../utils/errors/errors");
-const { Op } = require("sequelize");
 class FriendRepository {
   static async create(data) {
     try {
