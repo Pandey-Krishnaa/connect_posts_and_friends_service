@@ -8,7 +8,6 @@ class FriendRepository {
       const result = await friend.create(data);
       return result;
     } catch (err) {
-      console.log(err);
       throw new ApiError(
         "internal server error",
         statusCodes.ServerError,
@@ -23,6 +22,17 @@ class FriendRepository {
       });
 
       return result;
+    } catch (err) {
+      throw err;
+    }
+  }
+  static async deleteOne(id) {
+    try {
+      await friend.destroy({
+        where: {
+          id,
+        },
+      });
     } catch (err) {
       throw err;
     }

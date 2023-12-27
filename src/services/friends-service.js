@@ -1,26 +1,25 @@
-const { FriendRepository } = require("./../repositories/index");
 const ApiError = require("../utils/errors/ApiError");
 const { statusCodes, errors } = require("../utils/errors/errors");
+const { FriendRepository } = require("./../repositories/index");
 
 const { Op } = require("sequelize");
 class FriendService {
-  static async acceptRequest(user1_id, user2_id) {
+  static async removeFriend(friend_id, my_id) {
     try {
       const filter = {
         [Op.or]: [
-          { user1_id, user2_id },
-          { user1_id: user2_id, user2_id: user1_id },
+          { user1_id: friend_id, user2_id: my_id },
+          { user1_id: my_id, user2_id: friend_id },
         ],
       };
       const response = await FriendRepository.getOne(filter);
-      if (response)
+      if (!response)
         throw new ApiError(
-          "you both are already friends",
-          statusCodes.BadRequest,
-          errors.BadRequest
+          "failed to remove friend",
+          statusCodes.ServerError,
+          errors.ServerError
         );
-      const result = await FriendRepository.create({ user1_id, user2_id });
-      return result;
+      await FriendRepository.deleteOne(response.id);
     } catch (err) {
       throw err;
     }
