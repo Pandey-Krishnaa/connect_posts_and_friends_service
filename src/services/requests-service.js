@@ -40,5 +40,23 @@ class RequestService {
       throw err;
     }
   }
+  static async withdrawRequest(request_id, my_id) {
+    try {
+      const filter = {
+        id: request_id * 1,
+        from: my_id * 1,
+      };
+      const response = await RequestRepository.getOne(filter);
+      if (!response)
+        throw new ApiError(
+          "failed to withdraw request",
+          statusCodes.BadRequest,
+          errors.BadRequest
+        );
+      await RequestRepository.deleteOne(request_id);
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 module.exports = RequestService;

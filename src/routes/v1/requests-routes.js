@@ -6,5 +6,8 @@ router.route("/:id").post(isAuthenticated, RequestController.sendFriendRequest);
 router
   .route("/accept-request/:id")
   .post(isAuthenticated, RequestController.acceptFriendRequest);
+router
+  .route("/withdraw-request/:request_id")
+  .delete(isAuthenticated, RequestController.withdrawRequest);
 
 module.exports = router;

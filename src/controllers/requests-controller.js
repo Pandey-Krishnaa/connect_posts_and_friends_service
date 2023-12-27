@@ -24,5 +24,15 @@ const acceptFriendRequest = async (req, res, next) => {
     next(err);
   }
 };
+const withdrawRequest = async (req, res, next) => {
+  try {
+    await RequestService.withdrawRequest(req.params.request_id, req.user.id);
+    res.status(200).json({
+      message: "request withdrawed successfully",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 
-module.exports = { sendFriendRequest, acceptFriendRequest };
+module.exports = { sendFriendRequest, acceptFriendRequest, withdrawRequest };
