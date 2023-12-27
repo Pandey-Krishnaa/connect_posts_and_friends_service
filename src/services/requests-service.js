@@ -41,6 +41,7 @@ class RequestService {
     }
   }
   static async withdrawRequest(request_id, my_id) {
+    // user who sent the request only he/she will able to withdraw request
     try {
       const filter = {
         id: request_id * 1,
@@ -50,6 +51,22 @@ class RequestService {
       if (!response)
         throw new ApiError(
           "failed to withdraw request",
+          statusCodes.BadRequest,
+          errors.BadRequest
+        );
+      await RequestRepository.deleteOne(request_id);
+    } catch (err) {
+      throw err;
+    }
+  }
+  static async ignoreRequest(request_id, my_id) {
+    // only the user to them the request has sent will able to ignore request
+    try {
+      const filter = { id: request_id, to: my_id };
+      const response = await RequestRepository.getOne(filter);
+      if (!response)
+        throw new ApiError(
+          "failed to ignore request",
           statusCodes.BadRequest,
           errors.BadRequest
         );

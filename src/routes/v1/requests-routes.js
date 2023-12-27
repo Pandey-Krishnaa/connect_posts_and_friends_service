@@ -9,5 +9,8 @@ router
 router
   .route("/withdraw-request/:request_id")
   .delete(isAuthenticated, RequestController.withdrawRequest);
+router
+  .route("/ignore-request/:request_id")
+  .delete(isAuthenticated, RequestController.ignoreRequest);
 
 module.exports = router;

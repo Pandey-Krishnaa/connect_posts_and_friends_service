@@ -35,4 +35,20 @@ const withdrawRequest = async (req, res, next) => {
   }
 };
 
-module.exports = { sendFriendRequest, acceptFriendRequest, withdrawRequest };
+const ignoreRequest = async (req, res, next) => {
+  try {
+    await RequestService.ignoreRequest(req.params.request_id, req.user.id);
+    res.status(200).json({
+      message: "request ignored successfully",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = {
+  sendFriendRequest,
+  acceptFriendRequest,
+  withdrawRequest,
+  ignoreRequest,
+};
