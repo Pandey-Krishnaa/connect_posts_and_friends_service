@@ -1,3 +1,4 @@
+const sequelize = require("sequelize");
 const { Requests } = require("./../models/index");
 class RequestsRepository {
   static async create(data) {
@@ -14,6 +15,15 @@ class RequestsRepository {
         where: filter,
       });
       return req;
+    } catch (err) {
+      throw err;
+    }
+  }
+  static async getMany(filter, pagination) {
+    try {
+      console.log(pagination);
+      const response = Requests.findAll({ where: filter, ...pagination });
+      return response;
     } catch (err) {
       throw err;
     }

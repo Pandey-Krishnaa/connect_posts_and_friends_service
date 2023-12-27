@@ -75,5 +75,18 @@ class RequestService {
       throw err;
     }
   }
+  static async getAllRequestsForUser(my_id, queryObj) {
+    try {
+      const filter = { to: my_id };
+      const pagination = {
+        offset: queryObj.page * 1 - 1 || 0,
+        limit: queryObj.requests_per_page * 1 || 10,
+      };
+      const response = await RequestRepository.getMany(filter, pagination);
+      return response;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 module.exports = RequestService;
