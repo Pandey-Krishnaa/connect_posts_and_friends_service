@@ -24,7 +24,7 @@ class RequestService {
       throw err;
     }
   }
-  static async acceptRequest(request_id, my_id) {
+  static async acceptRequest(request_id, my_id, token) {
     try {
       const filter = { id: request_id, to: my_id };
       const response = await RequestRepository.getOne(filter);
@@ -32,7 +32,12 @@ class RequestService {
         throw new ApiError(
           "invalid request id or you're not authorized to accept this request"
         );
-      const result = await FriendService.acceptRequest(response.from, my_id);
+
+      const result = await FriendService.acceptRequest(
+        response.from,
+        my_id,
+        token
+      );
       console.log(request_id);
       await RequestRepository.deleteOne(request_id);
       return result;

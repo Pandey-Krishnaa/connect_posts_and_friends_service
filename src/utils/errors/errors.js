@@ -4,6 +4,7 @@ const errorObj = {
   ServerError: "ServerError",
   UnauthorizedRequest: "UnauthorizedRequest",
   NotFound: "NotFound",
+  AccessDenied: "AccessDenied",
 };
 const statusCodesObj = {
   BadRequest: 400,
@@ -11,6 +12,7 @@ const statusCodesObj = {
   ServerError: 500,
   UnauthorizedRequest: 401,
   NotFound: 404,
+  AccessDenied: 403,
 };
 Object.freeze(errorObj);
 Object.freeze(statusCodesObj);

@@ -37,5 +37,13 @@ class FriendRepository {
       throw err;
     }
   }
+  static async getMany(filter, pagination) {
+    try {
+      const friends = await friend.findAll({ where: filter, ...pagination });
+      return friends;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 module.exports = FriendRepository;
