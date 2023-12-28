@@ -16,8 +16,9 @@ const sendFriendRequest = async (req, res, next) => {
 
 const acceptFriendRequest = async (req, res, next) => {
   try {
-    const requestId = req.params.id;
-    await RequestService.acceptRequest(requestId, req.user.id);
+    const request_id = req.params.request_id;
+    const token = req.headers["x-auth-token"];
+    await RequestService.acceptRequest(request_id, req.user.id, token);
     res.status(200).json({
       message: "request accepted",
     });

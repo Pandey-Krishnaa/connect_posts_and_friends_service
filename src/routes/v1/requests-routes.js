@@ -5,7 +5,7 @@ const { RequestController } = require("./../../controllers/index");
 router.route("").get(isAuthenticated, RequestController.getAllMyRequests);
 router.route("/:id").post(isAuthenticated, RequestController.sendFriendRequest);
 router
-  .route("/accept-request/:id")
+  .route("/accept-request/:request_id")
   .post(isAuthenticated, RequestController.acceptFriendRequest);
 router
   .route("/withdraw-request/:request_id")
