@@ -1,4 +1,5 @@
-const { Post } = require("./../models/index");
+const { Post, PostAttachment } = require("./../models/index");
+
 class PostRepository {
   static async create(data) {
     try {

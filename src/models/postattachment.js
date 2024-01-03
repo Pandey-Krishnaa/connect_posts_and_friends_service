@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.belongsTo(models.Post, {
-        foreignKey: "post_id", // This is the foreign key in the Attachment model
+        foreignKey: "post_id",
         targetKey: "id",
       });
     }

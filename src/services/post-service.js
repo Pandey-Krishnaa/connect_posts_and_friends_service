@@ -16,5 +16,36 @@ class PostService {
       throw err;
     }
   }
+  static async getPostsByUserId(user_id, page_no = 1, result_per_page = 5) {
+    try {
+      const filter = { author_id: user_id };
+      const pagination = {
+        offset: (page_no - 1) * result_per_page * 1,
+        limit: result_per_page * 1,
+      };
+      const posts = await PostRepository.getMany(filter, pagination);
+      const post_attachments = {};
+      for (const post of posts) {
+        post_attachments[`${post.id}`] = [];
+        const attachments = await PostAttachmentService.getAttachments({
+          post_id: post.id,
+        });
+        attachments.forEach((attachment) => {
+          post_attachments[`${post.id}`].push({
+            url: attachment.attachment_public_url,
+            public_id: attachment.attachment_public_id,
+          });
+        });
+      }
+      const result = posts.map((post) => {
+        post.files = post_attachments[post.id];
+      });
+      console.log(result);
+
+      return posts;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 module.exports = PostService;

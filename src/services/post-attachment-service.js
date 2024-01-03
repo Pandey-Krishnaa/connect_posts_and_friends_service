@@ -24,5 +24,13 @@ class PostAttachmentService {
       throw err;
     }
   }
+  static async getAttachments(filter) {
+    try {
+      const attachments = await PostAttachmentRepository.getMany(filter);
+      return attachments;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 module.exports = PostAttachmentService;

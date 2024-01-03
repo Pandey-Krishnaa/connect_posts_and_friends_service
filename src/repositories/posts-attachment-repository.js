@@ -8,6 +8,15 @@ class PostRepository {
       throw err;
     }
   }
+  static async getMany(filter) {
+    try {
+      console.log("filer ", filter);
+      const post_attachments = await PostAttachment.findAll({ where: filter });
+      return post_attachments;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 
 module.exports = PostRepository;

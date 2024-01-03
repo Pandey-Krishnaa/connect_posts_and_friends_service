@@ -17,4 +17,23 @@ const createPost = async (req, res, next) => {
   }
 };
 
-module.exports = { createPost };
+const getPostByUserId = async (req, res, next) => {
+  try {
+    let { page_no, result_per_page } = req.query;
+    const { user_id } = req.params;
+    page_no = page_no || 1;
+    result_per_page = result_per_page || 10;
+    const posts = await PostService.getPostsByUserId(
+      user_id * 1,
+      page_no * 1,
+      result_per_page
+    );
+    res.status(200).json({
+      posts,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { createPost, getPostByUserId };
