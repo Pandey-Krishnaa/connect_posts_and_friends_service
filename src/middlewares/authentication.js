@@ -19,6 +19,7 @@ const isAuthenticated = async (req, res, next) => {
         "x-auth-token": token,
       },
     });
+
     if (!response.ok)
       return next(
         new ApiError(
@@ -27,7 +28,9 @@ const isAuthenticated = async (req, res, next) => {
           errors.UnauthorizedRequest
         )
       );
+
     const data = await response.json();
+
     req.user = data.user;
   } catch (err) {
     next(err);

@@ -11,10 +11,15 @@ module.exports = {
       },
       title: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
+      },
+      author_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
       },
       updatedAt: {
         allowNull: false,
