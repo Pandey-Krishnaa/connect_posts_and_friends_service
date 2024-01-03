@@ -38,11 +38,12 @@ class PostService {
         });
       }
       const result = posts.map((post) => {
-        post.files = post_attachments[post.id];
+        const data = post.dataValues;
+        data.files = post_attachments[post.id];
+        return data;
       });
-      console.log(result);
 
-      return posts;
+      return result;
     } catch (err) {
       throw err;
     }

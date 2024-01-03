@@ -10,7 +10,6 @@ class PostRepository {
   }
   static async getMany(filter) {
     try {
-      console.log("filer ", filter);
       const post_attachments = await PostAttachment.findAll({ where: filter });
       return post_attachments;
     } catch (err) {
