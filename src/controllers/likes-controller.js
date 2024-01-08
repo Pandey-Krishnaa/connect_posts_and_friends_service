@@ -5,10 +5,8 @@ const LikeOrRemoveLike = async (req, res, next) => {
       user_id: req.user.id,
       post_id: req.params.post_id,
     });
-
-    console.log(data);
     if (data) res.status(200).json({ data });
-    else res.status(204).json({ message: "post disliked" });
+    else res.status(204).end();
   } catch (err) {
     next(err);
   }
