@@ -68,6 +68,7 @@ const getAllFriends = async (req, res, next) => {
     next(err);
   }
 };
+
 module.exports = {
   removeFriend,
   getAllFriends,

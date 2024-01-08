@@ -17,6 +17,7 @@ class PostAttachmentService {
         })
       );
       const attachmentsResults = await Promise.all(attachmentsPromises);
+      console.log(attachmentsResults);
       return attachmentsResults;
     } catch (err) {
       throw err;

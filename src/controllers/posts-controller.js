@@ -2,8 +2,8 @@ const { PostService } = require("./../services/index");
 const createPost = async (req, res, next) => {
   try {
     const { title } = req.body;
-
     let attachments = [];
+    console.log(req.files);
     if (req.files && req.files.attachments) {
       if (!Array.isArray(req.files.attachments))
         attachments.push(req.files.attachments);
@@ -11,6 +11,7 @@ const createPost = async (req, res, next) => {
     }
     const data = { title, attachments, author_id: req.user.id };
     const post = await PostService.createPost(data);
+
     res.status(200).json({ post });
   } catch (err) {
     next(err);
@@ -29,6 +30,11 @@ const getPostByUserId = async (req, res, next) => {
       result_per_page
     );
     res.status(200).json({
+      author_details: {
+        name: req.user.name,
+        avatar_url: req.user.avatar_public_url,
+        author_id: req.user.name,
+      },
       posts,
     });
   } catch (err) {

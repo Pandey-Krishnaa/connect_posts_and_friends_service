@@ -33,7 +33,7 @@ const isAuthenticated = async (req, res, next) => {
 
     req.user = data.user;
   } catch (err) {
-    next(err);
+    return next(err);
   }
   next();
 };
