@@ -3,4 +3,5 @@ module.exports = {
   RequestService: require("./requests-service"),
   PostService: require("./post-service"),
   PostAttachmentService: require("./post-attachment-service"),
+  LikesService: require("./likes-service"),
 };

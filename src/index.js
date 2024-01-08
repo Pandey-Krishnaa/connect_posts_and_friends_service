@@ -7,6 +7,7 @@ const {
   FriendRoutes,
   RequestRoutes,
   PostsRoutes,
+  LikesRoutes,
 } = require("./routes/v1/index");
 const errorHandler = require("./utils/commons/errorHandler");
 const { v2: cloudinary } = require("cloudinary");
@@ -40,6 +41,7 @@ app.use(expressUploader({ useTempFiles: true }));
 app.use("/api/v1/friends", FriendRoutes);
 app.use("/api/v1/requests", RequestRoutes);
 app.use("/api/v1/posts", PostsRoutes);
+app.use("/api/v1/likes", LikesRoutes);
 app.all("*", (req, res) => {
   res.status(400).json({
     success: false,

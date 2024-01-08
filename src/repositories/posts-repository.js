@@ -20,6 +20,14 @@ class PostRepository {
       throw err;
     }
   }
+  static async getOne(filter) {
+    try {
+      const post = await Post.findOne({ where: filter });
+      return post;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 
 module.exports = PostRepository;

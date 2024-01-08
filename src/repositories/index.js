@@ -3,4 +3,5 @@ module.exports = {
   RequestRepository: require("./requests-repository"),
   PostRepository: require("./posts-repository"),
   PostAttachmentRepository: require("./posts-attachment-repository"),
+  LikesRepository: require("./likes-respository"),
 };

@@ -1,3 +1,5 @@
+const ApiError = require("../utils/errors/ApiError");
+const { statusCodes, errors } = require("../utils/errors/errors");
 const { PostRepository } = require("./../repositories/index");
 const PostAttachmentService = require("./post-attachment-service");
 
@@ -44,6 +46,21 @@ class PostService {
       });
 
       return result;
+    } catch (err) {
+      throw err;
+    }
+  }
+  static async getPostById(post_id) {
+    try {
+      console.log("post id => ", post_id);
+      const post = await PostRepository.getOne({ id: post_id });
+      if (!post)
+        throw new ApiError(
+          "post doesn't exists",
+          statusCodes.BadRequest,
+          errors.BadRequest
+        );
+      return post;
     } catch (err) {
       throw err;
     }
