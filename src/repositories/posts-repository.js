@@ -1,5 +1,5 @@
 const { Post, PostAttachment } = require("./../models/index");
-
+const { Like } = require("./../models/index");
 class PostRepository {
   static async create(data) {
     try {
@@ -14,6 +14,7 @@ class PostRepository {
       const posts = await Post.findAll({
         where: filter,
         ...pagination,
+        include: [{ model: Like, required: false }],
       });
       return posts;
     } catch (err) {

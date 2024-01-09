@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.hasMany(models.PostAttachment, { foreignKey: "post_id" });
+      this.hasMany(models.Like, { foreignKey: "post_id" });
     }
   }
   Post.init(
