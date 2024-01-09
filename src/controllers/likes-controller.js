@@ -11,4 +11,16 @@ const LikeOrRemoveLike = async (req, res, next) => {
     next(err);
   }
 };
-module.exports = { LikeOrRemoveLike };
+const getLikesOfPost = async (req, res, next) => {
+  try {
+    const post_id = req.params.post_id;
+    const data = await LikesService.GetLikes(post_id);
+    res.status(200).json({
+      likeCount: data.length,
+      likes: data,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+module.exports = { LikeOrRemoveLike, getLikesOfPost };

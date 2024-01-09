@@ -10,6 +10,7 @@ class LikesRepository {
   }
   static async getLike(filter) {
     try {
+      console.log(filter);
       const likes = await Like.findAll({ where: filter });
       return likes;
     } catch (err) {

@@ -6,5 +6,7 @@ const { LikesController } = require("../../controllers");
 
 router
   .route("/posts/:post_id")
-  .post(isAuthenticated, LikesController.LikeOrRemoveLike);
+  .post(isAuthenticated, LikesController.LikeOrRemoveLike)
+  .get(isAuthenticated, LikesController.getLikesOfPost);
+
 module.exports = router;

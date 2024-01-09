@@ -18,9 +18,12 @@
   },
   "homepage": "https://github.com/krishna-ship-it/connect_posts_and_friends_service#readme",
   "dependencies": {
+    "axios": "^1.6.5",
     "cloudinary": "^1.41.1",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "express-fileupload": "^1.4.3",
     "express-upload": "^0.1.0",
     "mysql2": "^3.6.5",
     "nodemon": "^3.0.2",

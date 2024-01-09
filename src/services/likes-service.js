@@ -18,5 +18,15 @@ class LikesService {
       throw err;
     }
   }
+  static async GetLikes(post_id) {
+    try {
+      const filter = { post_id };
+      console.log("filter in service = ", filter);
+      const likes = await LikesRepository.getLike(filter);
+      return likes;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 module.exports = LikesService;
