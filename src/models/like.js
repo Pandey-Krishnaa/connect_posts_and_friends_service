@@ -9,13 +9,24 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.Post, { foreignKey: "post_id" });
+      this.belongsTo(models.Post, {
+        foreignKey: "post_id",
+        onDelete: "cascade",
+      });
     }
   }
   Like.init(
     {
       post_id: { type: DataTypes.INTEGER, allowNull: false },
-      user_id: { type: DataTypes.INTEGER, allowNull: false },
+      user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        onDelete: "CASCADE",
+        references: {
+          model: "Posts",
+          key: "id",
+        },
+      },
     },
     {
       sequelize,

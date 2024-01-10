@@ -1,3 +1,4 @@
+const { LikesService } = require(".");
 const ApiError = require("../utils/errors/ApiError");
 const { statusCodes, errors } = require("../utils/errors/errors");
 const { PostRepository } = require("./../repositories/index");
@@ -61,6 +62,14 @@ class PostService {
           errors.BadRequest
         );
       return post;
+    } catch (err) {
+      throw err;
+    }
+  }
+  static async detelePostById(post_id) {
+    try {
+      await PostRepository.delete({ id: post_id });
+      return null;
     } catch (err) {
       throw err;
     }

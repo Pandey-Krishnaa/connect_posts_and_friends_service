@@ -1,3 +1,6 @@
+const ApiError = require("../utils/errors/ApiError");
+
+const { statusCodes, errors } = require("../utils/errors/errors");
 const { PostService } = require("./../services/index");
 const createPost = async (req, res, next) => {
   try {
@@ -42,4 +45,28 @@ const getPostByUserId = async (req, res, next) => {
   }
 };
 
-module.exports = { createPost, getPostByUserId };
+const deletePostById = async (req, res, next) => {
+  try {
+    const { post_id } = req.params;
+    const post = await PostService.getPostById(post_id);
+    if (!post)
+      throw new ApiError(
+        "invalid post id",
+        statusCodes.NotFound,
+        errors.NotFound
+      );
+    if (post.author_id !== req.user.id)
+      throw new ApiError(
+        "you can't delete this post!",
+        statusCodes.UnauthorizedRequest,
+        errors.UnauthorizedRequest
+      );
+    await PostService.detelePostById(post_id);
+
+    res.status(204).end();
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { createPost, getPostByUserId, deletePostById };

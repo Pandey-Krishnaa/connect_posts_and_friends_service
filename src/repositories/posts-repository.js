@@ -15,6 +15,7 @@ class PostRepository {
         where: filter,
         ...pagination,
         include: [{ model: Like, required: false }],
+        order: [["createdAt", "DESC"]],
       });
       return posts;
     } catch (err) {
@@ -25,6 +26,14 @@ class PostRepository {
     try {
       const post = await Post.findOne({ where: filter });
       return post;
+    } catch (err) {
+      throw err;
+    }
+  }
+  static async delete(filter) {
+    try {
+      await Post.destroy({ where: filter });
+      return null;
     } catch (err) {
       throw err;
     }

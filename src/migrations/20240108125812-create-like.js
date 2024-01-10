@@ -12,6 +12,11 @@ module.exports = {
       post_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        references: {
+          model: "Posts",
+          key: "id",
+        },
+        onDelete: "CASCADE",
       },
       user_id: {
         type: Sequelize.INTEGER,
