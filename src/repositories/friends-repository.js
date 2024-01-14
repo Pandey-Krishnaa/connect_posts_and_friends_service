@@ -37,10 +37,18 @@ class FriendRepository {
       throw err;
     }
   }
-  static async getMany(filter, pagination) {
+  static async getMany(filter = {}, pagination) {
     try {
       const friends = await friend.findAll({ where: filter, ...pagination });
       return friends;
+    } catch (err) {
+      throw err;
+    }
+  }
+  static async getNumberOfRecords(filter = {}) {
+    try {
+      const count = await friend.count({ where: filter });
+      return count;
     } catch (err) {
       throw err;
     }

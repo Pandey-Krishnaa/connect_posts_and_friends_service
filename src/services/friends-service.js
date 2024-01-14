@@ -97,7 +97,8 @@ class FriendService {
         [Op.or]: [{ user1_id: user_id }, { user2_id: user_id }],
       };
       const friends = await FriendRepository.getMany(filter, pagination);
-      return friends;
+      const friendsCount = await FriendRepository.getNumberOfRecords(filter);
+      return { friends, friendsCount };
     } catch (err) {
       throw err;
     }

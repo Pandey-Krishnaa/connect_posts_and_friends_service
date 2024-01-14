@@ -1,10 +1,17 @@
 const { GET_USER_BY_ID_URL } = require("../config");
-const { statusCodes } = require("../utils/errors/errors");
+const ApiError = require("../utils/errors/ApiError");
+const { statusCodes, errors } = require("../utils/errors/errors");
 const { RequestService } = require("./../services/index");
 const sendFriendRequest = async (req, res, next) => {
   try {
     const from = req.user.id;
     const to = req.params.id;
+    if (from === to)
+      throw new ApiError(
+        "you can't send request to yourself",
+        statusCodes.BadRequest,
+        errors.BadRequest
+      );
     await RequestService.sendRequest(from, to);
     res.status(200).json({
       message: "request sent successfully",
