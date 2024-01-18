@@ -26,6 +26,13 @@ class RequestService {
   }
   static async acceptRequest(request_id, my_id, token) {
     try {
+      const friendshipStatus = await FriendService.checkFriendsStatus(from, to);
+      if (friendshipStatus)
+        throw new ApiError(
+          "you both are already friends",
+          statusCodes.BadRequest,
+          errors.BadRequest
+        );
       const filter = { id: request_id, to: my_id };
       const response = await RequestRepository.getOne(filter);
       if (!response)
