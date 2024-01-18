@@ -103,5 +103,20 @@ class FriendService {
       throw err;
     }
   }
+  static async checkFriendsStatus(user1_id, user2_id) {
+    try {
+      const filter = {
+        [Op.or]: [
+          { user1_id, user2_id },
+          { user1_id: user2_id, user2_id: user1_id },
+        ],
+      };
+      const response = await FriendRepository.getOne(filter);
+      console.log(response);
+      return response;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 module.exports = FriendService;

@@ -75,8 +75,21 @@ const getAllFriends = async (req, res, next) => {
     next(err);
   }
 };
+const checkFriendsStatus = async (req, res, next) => {
+  try {
+    const response = await FriendsService.checkFriendsStatus(
+      req.params.user1_id,
+      req.params.user2_id
+    );
+    if (!response) res.status(200).json({ friends: false });
+    else res.status(200).json({ friends: true });
+  } catch (err) {
+    next(err);
+  }
+};
 
 module.exports = {
   removeFriend,
   getAllFriends,
+  checkFriendsStatus,
 };
